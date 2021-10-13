@@ -20,3 +20,18 @@
     # the associated labelmap at https://penzhanwu2.blob.core.windows.net/sgg/sgg_benchmark/vinvl_model_zoo/VG-SGG-dicts-vgoi6-clipped.json
     python tools/demo/demo_image.py --config_file sgg_configs/vgattr/vinvl_x152c4.yaml --img_file demo/woman_fish.jpg --save_file output/woman_fish_x152c4.attr.jpg --visualize_attr MODEL.WEIGHT pretrained_model/vinvl_vg_x152c4.pth MODEL.ROI_HEADS.NMS_FILTER 1 MODEL.ROI_HEADS.SCORE_THRESH 0.2 TEST.IGNORE_BOX_REGRESSION False
     ```
+
+# Object detection 관련 논문
+
+1. [VinVL: Revisiting Visual Representations in Vision-Language Models](https://arxiv.org/abs/2101.00529)
+    - 기존의 Bottom-up top-down attention model을 사용한 object detection과 달리, object-centric representation 사용해 큰 데이터셋 이용한 pre-training 방식
+    - 매우 큰 object detection 모델 사용
+2. [Oscar: Object-Semantics Aligned Pre-training for Vision-Language Tasks](https://arxiv.org/pdf/2004.06165.pdf)
+    - Object tag을 이용한 image-text pair pre-train 방식
+    - Object tag을 text와 image간의 anchoring point로 사용해 pre-training objective 설정
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/277f0986-ab41-4333-8dc9-011ec1ad78fe/Untitled.png)
+        
+    - Transformer 이용해 pre-training (일종의 vision-language fusion 모델)
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d258a54b-7a1f-4f86-abd4-d0bca0010d24/Untitled.png)
