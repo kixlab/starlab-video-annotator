@@ -1528,20 +1528,15 @@ const defaultData1 = [
 function valuetext(value) {
   return `${value}`;
 }
-const marks = [
-  {
-    value: 0,
-    label: "0",
-  },
-  {
-    value: 50,
-    label: "0.5",
-  },
-  {
-    value: 100,
-    label: "1",
-  },
-];
+const marks = [];
+for (var i = 0; i <= 100; i += 25) {
+  marks.push(
+    { 
+      value: i,
+      label:  (i/100).toString()
+    }
+  )
+}
 
 const App = () => {
   const classes = useStyles();
@@ -1568,7 +1563,7 @@ const App = () => {
             marginRight: 50,
             marginLeft: 50,
             display: "inline-block",
-            width: "15%",
+            width: "20%",
           }}
         >
           <div
@@ -1580,7 +1575,8 @@ const App = () => {
           </div>
           <Slider
             orientation="horizontal"
-            defaultValue={[30, 70]}
+            defaultValue={30}
+            track="inverted"
             aria-labelledby="vertical-slider"
             getAriaValueText={valuetext}
             marks={marks}
@@ -1591,7 +1587,7 @@ const App = () => {
             marginRight: 50,
             marginLeft: 50,
             display: "inline-block",
-            width: "15%",
+            width: "20%",
           }}
         >
           <div
@@ -1603,7 +1599,8 @@ const App = () => {
           </div>
           <Slider
             orientation="horizontal"
-            defaultValue={[30, 70]}
+            defaultValue={70}
+            track="inverted"
             aria-labelledby="vertical-slider"
             getAriaValueText={valuetext}
             marks={marks}
