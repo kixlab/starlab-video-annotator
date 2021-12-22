@@ -1,6 +1,6 @@
 import { makeStyles, Slider } from "@material-ui/core";
 
-import React from "react";
+import React, { useState } from "react";
 
 import ReactImageAnnotate from "react-image-annotate";
 
@@ -1538,8 +1538,28 @@ for (var i = 0; i <= 100; i += 25) {
   )
 }
 
+// conf: 0.9619261622428894,
+// attr: ["square", "ceramic", "small", "white"],
+// attr_conf: [
+//   0.0631619319319725, 0.07361701875925064, 0.29271504282951355,
+//   0.296681672334671,
+// ],
+
 const App = () => {
   const classes = useStyles();
+  const [labelConf, setLabelConf] = useState(0.7);
+  const [attrConf, setAttrConf] = useState(0.8);
+
+  const handleLabelSlider = (event, newValue) => {
+    setLabelConf(newValue/100);
+    console.log("Label:", newValue/100);
+  };
+
+  const handleAttrSlider = (event, newValue) => {
+    setAttrConf(newValue/100);
+    console.log("Attr:", newValue/100);
+  };
+
   return (
     <div>
       <ReactImageAnnotate
@@ -1575,11 +1595,12 @@ const App = () => {
           </div>
           <Slider
             orientation="horizontal"
-            defaultValue={30}
+            defaultValue={70}
             track="inverted"
             aria-labelledby="vertical-slider"
             getAriaValueText={valuetext}
             marks={marks}
+            onChange={handleLabelSlider}
           />
         </div>
         <div
@@ -1599,11 +1620,12 @@ const App = () => {
           </div>
           <Slider
             orientation="horizontal"
-            defaultValue={70}
+            defaultValue={80}
             track="inverted"
             aria-labelledby="vertical-slider"
             getAriaValueText={valuetext}
             marks={marks}
+            onChange={handleAttrSlider}
           />
         </div>
       </div>
