@@ -125,12 +125,16 @@ const attributes = [
 
 const Annotator = (props) => {
 
+    const [keyVal, forceUpdate] = useState(0);
+
     useEffect(() => {
         console.log("update");
+        forceUpdate(n => !n);
     }, [props]);
 
     return (
         <ReactImageAnnotate
+            key={keyVal}
             labelImages
             selectedImage={props.selectedImage}
             taskDescription="# Draw region around each animal."
