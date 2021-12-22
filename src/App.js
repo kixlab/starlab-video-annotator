@@ -1545,14 +1545,18 @@ for (var i = 0; i <= 100; i += 25) {
 //   0.296681672334671,
 // ],
 
+const defaultImg = "https://i.imgur.com/q6LJrtB.jpg";
+
 const App = () => {
   const classes = useStyles();
-  const [labelConf, setLabelConf] = useState(0.7);
+  const [currentImg, setCurrentImg] = useState(defaultImg);
+  const [currentData, setCurrentData] = useState([defaultData1.find(item => item.src === defaultImg)]);
+  const [labelConf, setLabelConf] = useState(0.0);
   const [attrConf, setAttrConf] = useState(0.8);
 
   const handleLabelSlider = (event, newValue) => {
     setLabelConf(newValue/100);
-    console.log("Label:", newValue/100);
+    filterData(newValue/100);
   };
 
   const handleAttrSlider = (event, newValue) => {
@@ -1560,13 +1564,30 @@ const App = () => {
     console.log("Attr:", newValue/100);
   };
 
+  const filterByLabel = (regions, labelConf) => {
+    var regionsCopy = [];
+    for(var i = 0; i < regions.length; i++) {
+      var item = regions[i];
+      if(item.conf >= labelConf) {
+        regionsCopy.push(item);
+      }
+    }
+    return regionsCopy;
+  }
+
+  const filterData = (labelConf) => {
+    var data = {...currentData[0]};
+    data.regions = filterByLabel(data.regions, labelConf);
+    setCurrentData([data]);
+  }
+
   return (
     <div>
       <ReactImageAnnotate
         labelImages
-        selectedImage="https://i.imgur.com/q6LJrtB.jpg"
+        selectedImage={currentImg}
         taskDescription="# Draw region around each animal."
-        images={defaultData1}
+        images={currentData}
         regionClsList={labels}
         regionTagList={attributes}
         enabledTools={["create-box"]}
@@ -1595,7 +1616,7 @@ const App = () => {
           </div>
           <Slider
             orientation="horizontal"
-            defaultValue={70}
+            defaultValue={0}
             track="inverted"
             aria-labelledby="vertical-slider"
             getAriaValueText={valuetext}
